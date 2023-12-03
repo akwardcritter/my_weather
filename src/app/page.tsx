@@ -2,6 +2,7 @@
 import { ChangingBackground } from '@/components/ChangingBackground';
 import { InputForm, LocationDataType } from '@/components/InputForm';
 import { LocationResults } from '@/components/LocationResults';
+import Forecast from '@/components/Forecast';
 import {
   Card,
   CardContent,
@@ -78,11 +79,6 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // navigator.geolocation.getCurrentPosition(function (position) {
-      //   setLatitude(position.coords.latitude);
-      //   setLongitude(position.coords.longitude);
-      // });
-
       try {
         const response: AxiosResponse = await axios.get(
           `${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/weather/?lat=${latitude}&lon=${longitude}&units=metric&APPID=${process.env.NEXT_PUBLIC_REACT_APP_API_KEY}`,
@@ -100,17 +96,7 @@ export default function Home() {
       }
     };
     fetchData();
-
-    // console.log('Latitude is: ', latitude);
-    // console.log('Longitude is: ', longitude);
   }, [latitude, longitude]);
-
-  // console.log(
-  //   'URL: ',
-  //   `${process.env.NEXT_PUBLIC_REACT_APP_API_URL}/weather/?lat=${latitude}&lon=${longitude}&units=metric&appid=${process.env.NEXT_PUBLIC_REACT_APP_API_KEY}`,
-  // );
-
-  // console.log('data: ', weatherData?.weather);
 
   const pullLocation = (response: LocationDataType[]) => {
     setLocationResults(response);
@@ -138,30 +124,37 @@ export default function Home() {
         ) : null}
       </div>
       {weatherData ? (
-        <Card className="flex flex-col justify-center items-center">
-          <CardHeader>
-            <CardTitle className="text-center">Current Weather</CardTitle>
-            <CardDescription className="text-center">
-              in {weatherData.name}, {weatherData.sys.country}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col items-center">
-              <p className="font-semibold text-6xl">
-                {Math.round(weatherData.main.temp)} °C
-              </p>
-              <Image
-                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-                alt="cloudy"
-                width={50}
-                height={50}
-              ></Image>
-              <p className="text-center">
-                {weatherData.weather[0].description}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        <>
+          <Card className="flex flex-col justify-center items-center">
+            <CardHeader>
+              <CardTitle className="text-center">Current Weather</CardTitle>
+              <CardDescription className="text-center">
+                in {weatherData.name}, {weatherData.sys.country}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center">
+                <p className="font-semibold text-6xl">
+                  {Math.round(weatherData.main.temp)} °C
+                </p>
+                <Image
+                  src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                  alt="cloudy"
+                  width={50}
+                  height={50}
+                ></Image>
+                <p className="text-center">
+                  {weatherData.weather[0].description}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+          <Forecast
+            latitude={latitude || 0}
+            longitude={longitude || 0}
+            apiKey={process.env.NEXT_PUBLIC_REACT_APP_API_KEY || ''}
+          />
+        </>
       ) : null}
     </div>
   );
