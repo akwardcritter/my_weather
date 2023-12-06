@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <div className="m-[10%] flex gap-5">
+    <div className="m-[4%] flex gap-5 max-h-screen">
       <div>
         <InputForm func={pullLocation}></InputForm>
         {locationResults ? (

@@ -8,12 +8,12 @@ interface WeatherProps {
 
 export const Weather = ({ longitude, latitude }: WeatherProps) => {
   return (
-    <>
+    <div className="flex grow gap-5">
       <CurrentWeather
         latitude={latitude}
         longitude={longitude}
       ></CurrentWeather>
       <Forecast latitude={latitude} longitude={longitude} />
-    </>
+    </div>
   );
 };

@@ -101,7 +101,7 @@ export const CurrentWeather = ({
   return (
     <>
       {currentWeatherData ? (
-        <Card className="flex flex-col justify-center items-center min-w-fit">
+        <Card className="flex grow flex-col justify-center items-center min-w-fit min-h-full">
           <CardHeader>
             <CardTitle className="text-center">Current Weather</CardTitle>
             <CardDescription className="text-center">
