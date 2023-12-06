@@ -14,6 +14,8 @@ import { Separator } from '@/components/ui/separator';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 
 // inspired by https://www.freecodecamp.org/news/learn-react-by-building-a-weather-app/
 export interface WeatherDataType {
@@ -77,6 +79,20 @@ export default function Home() {
   const [weatherData, setWeatherData] = useState<WeatherDataType>();
   const [locationResults, setLocationResults] = useState<LocationDataType[]>();
 
+  const options = {
+    chart: {
+      type: 'spline',
+    },
+    title: {
+      text: 'My chart',
+    },
+    series: [
+      {
+        data: [1, 2, 1, 4, 3, 6],
+      },
+    ],
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -125,7 +141,7 @@ export default function Home() {
       </div>
       {weatherData ? (
         <>
-          <Card className="flex flex-col justify-center items-center">
+          <Card className="flex flex-col justify-center items-center min-w-fit">
             <CardHeader>
               <CardTitle className="text-center">Current Weather</CardTitle>
               <CardDescription className="text-center">
@@ -149,11 +165,7 @@ export default function Home() {
               </div>
             </CardContent>
           </Card>
-          <Forecast
-            latitude={latitude || 0}
-            longitude={longitude || 0}
-            apiKey={process.env.NEXT_PUBLIC_REACT_APP_API_KEY || ''}
-          />
+          <Forecast latitude={latitude || 0} longitude={longitude || 0} />
         </>
       ) : null}
     </div>

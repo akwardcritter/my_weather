@@ -19,6 +19,8 @@
     "classnames": "^2.3.2",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
+    "highcharts": "^11.2.0",
+    "highcharts-react-official": "^3.2.1",
     "lucide-react": "^0.288.0",
     "moment": "^2.29.4",
     "next": "13.5.6",
