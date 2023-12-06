@@ -15,15 +15,11 @@ interface LocationResultsProps {
 }
 
 export const LocationResults = ({ response, func }: LocationResultsProps) => {
-  const [chosenLocation, setChosenLocation] = useState<LocationDataType>();
-
-  chosenLocation ? func(chosenLocation) : null;
-
   return (
     <ScrollArea className="w-96 h-52 whitespace-nowrap rounded-md border">
-      {response.map((entry) => (
+      {response.map((entry, index) => (
         // eslint-disable-next-line react/jsx-key
-        <Card onClick={() => setChosenLocation(entry)} className="mb-2">
+        <Card key={index} onClick={() => func(entry)} className="mb-2">
           <CardHeader>
             <CardTitle>{entry.name}</CardTitle>
             <CardDescription>{entry.country}</CardDescription>
