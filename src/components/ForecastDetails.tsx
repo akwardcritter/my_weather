@@ -8,7 +8,7 @@ interface ForecastDetailProps {
 
 export const ForecastDetails = ({ selectedEntry }: ForecastDetailProps) => {
   return (
-    <Card className="flex flex-col gap-2 overflow-scroll p-2 m-2 grow w-[70%] h-[40%]">
+    <Card className="flex flex-col gap-2 overflow-y-auto p-2 m-2 grow w-[70%] h-[40%]">
       {selectedEntry.map((entry, entryIndex) => (
         <Card key={entryIndex} className="flex items-center justify-evenly">
           <p style={{ fontSize: '1rem', color: '#555' }}>

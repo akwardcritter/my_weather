@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardContent,
 } from './ui/card';
-import { ScrollArea, ScrollBar } from './ui/scroll-area';
 import { HighchartsReact } from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { ForecastDetails } from './ForecastDetails';
@@ -78,7 +77,6 @@ const groupForecastByDay = (forecastList: ForecastDataType['list']) => {
 
 const Forecast: React.FC<ForecastProps> = ({ latitude, longitude }) => {
   const [forecastData, setForecastData] = useState<ForecastDataType>();
-  const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedEntry, setSelectedEntry] = useState<{
     entry?: ForecastDataType['list'];
     isSelected: boolean;
@@ -156,7 +154,7 @@ const Forecast: React.FC<ForecastProps> = ({ latitude, longitude }) => {
 
   return (
     <div>
-      <Card className="flex gap-5 overflow-scroll p-2 m-2 grow w-[70%]">
+      <Card className="flex gap-5 overflow-x-auto p-2 m-2 grow w-[70%]">
         {Object.entries(groupedForecast).map(
           ([date, entries]: [string, ForecastDataType['list']], index) => (
             <Card
@@ -165,11 +163,7 @@ const Forecast: React.FC<ForecastProps> = ({ latitude, longitude }) => {
               onClick={() =>
                 setSelectedEntry((prevSelectedEntry) => ({
                   entry: entries,
-                  isSelected: prevSelectedEntry.entry
-                    ? prevSelectedEntry.entry[0].dt_txt === entries[0].dt_txt
-                      ? !prevSelectedEntry.isSelected
-                      : prevSelectedEntry.isSelected
-                    : false,
+                  isSelected: !prevSelectedEntry.isSelected,
                 }))
               }
             >
@@ -205,7 +199,7 @@ const Forecast: React.FC<ForecastProps> = ({ latitude, longitude }) => {
             selectedEntry={selectedEntry.entry}
           ></ForecastDetails>
         ) : (
-          <div className="flex grow h-80">
+          <div className="flex grow h-50">
             <HighchartsReact highcharts={Highcharts} options={options} />
           </div>
         )
